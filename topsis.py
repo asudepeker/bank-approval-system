@@ -180,8 +180,9 @@ def calculate_npis(weighted_alternatives, benefit_indices, cost_indices):
 
 
 def calculate_dp(weighted_alternative_matrix, npis):
-    dp = np.zeros(5)
-    for i in range(5):
+    alt_count = weighted_alternative_matrix.shape[0]
+    dp = np.zeros(alt_count)
+    for i in range(alt_count):
         dp[i] = np.sqrt(np.sum(np.square(weighted_alternative_matrix[i] - npis)))
     return dp
 
@@ -200,14 +201,15 @@ def calculate_nnis(weighted_alternatives, benefit_indices, cost_indices):
     return nnis
 
 def calculate_dn(weighted_alternative_matrix, nnis):
-    dn = np.zeros(5)
-    for i in range(5):
+    alt_count = weighted_alternative_matrix.shape[0]
+    dn = np.zeros(alt_count)
+    for i in range(alt_count):
         dn[i] = np.sqrt(np.sum(np.square(weighted_alternative_matrix[i] - nnis)))
     return dn
 
 def calculate_proximity_coeffs(dp, dn):
-    prox_coeffs = np.zeros(5)
-    for i in range(5):
+    prox_coeffs = np.zeros(dp.shape[0])
+    for i in range(dp.shape[0]):
         prox_coeffs[i] = dn[i]/(dp[i] + dn[i])
     return prox_coeffs
 
